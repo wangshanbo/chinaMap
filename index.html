@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>中国地图</title>
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<!-- Echarts3 -->
+	<script type="text/javascript" src="static/js/echarts.min.js"></script>
+	<!-- 全国344个市、区、州对应的数字编号 -->
+	<script type="text/javascript" src="static/map/citymap.js"></script>
+</head>
+
+<body>
+	<div id="main"></div>
+	<script type="text/javascript" src="static/js/jquery.min.js"></script>
+	<script type="text/javascript" src="static/js/chinamap.js"></script>
+	<script>
+		function callback(data, params) {
+			$.ajax({
+				url: '/mock/getProvinces',
+				data: {
+					provincialId: params.data.id
+				},
+				method: "POST",
+				success: function success(res) {
+					d = res.data.mapData;
+					restMap(d, data, params.name)
+				}
+			});
+		}
+		chinaMap(
+			"main",
+			"/mock/mapData",
+			false,
+			"#4081ff",
+			"#111",
+			"#D2691E",
+			callback);
+	</script>
+</body>
+
+</html>
